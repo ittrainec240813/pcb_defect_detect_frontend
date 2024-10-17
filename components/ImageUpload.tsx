@@ -14,15 +14,16 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onImageSelected, onImageInfer
     // 這裡放置上傳檔案的邏輯，例如使用 FileReader 讀取檔案內容，或將檔案上傳至伺服器
     if (selectedImage) {
       const reader = new FileReader();
-      reader.onload = async (e: any) => {
-        if (e.target.result.split(",")[0].split("/")[0] === "data:image") {
+      reader.onload = async (e: ProgressEvent<FileReader>) => {
+        if (typeof e?.target?.result === 'string' && e.target.result.split(",")[0].split("/")[0] === "data:image") {
+          const imageData: string = e.target.result.split(",")[1]; // Type as string
+          // Use axios.post with generic types
           await axios.post<InferenceResponse>(
             `${process.env.NEXT_PUBLIC_BACKEND_URL}/inference`,
-            { image: e.target.result.split(",")[1]},
+            { image: imageData }
           ).then((response) => {
-            // console.log(response.data)
-            onImageInferenced(response.data)
-          })
+            onImageInferenced(response.data);
+          });
         }
       };
       reader.readAsDataURL(selectedImage);
@@ -35,6 +36,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onImageSelected, onImageInfer
     const reader = new FileReader();
     reader.onloadend = () => {
       setSelectedImage(file);
+      onImageInferenced({results: []})
       onImageSelected(reader.result as string);
     };
     reader.readAsDataURL(file);
