@@ -1,13 +1,18 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { InferenceResponse } from "../interfaces/InferenceInterface"
+import { InferenceResponse } from "../interfaces/InferenceInterface";
 
 interface ImageUploadProps {
   onImageSelected: (imageUrl: string) => void;
   onImageInferenced: (result: InferenceResponse) => void;
+  onShowLoader: (showLoader: boolean) => void;
 }
 
-const ImageUpload: React.FC<ImageUploadProps> = ({ onImageSelected, onImageInferenced}) => {
+const ImageUpload: React.FC<ImageUploadProps> = ({ 
+  onImageSelected, 
+  onImageInferenced, 
+  onShowLoader
+}) => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
 
   const handleUpload = () => {
@@ -17,18 +22,21 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onImageSelected, onImageInfer
       reader.onload = async (e: ProgressEvent<FileReader>) => {
         if (typeof e?.target?.result === 'string' && e.target.result.split(",")[0].split("/")[0] === "data:image") {
           const imageData: string = e.target.result.split(",")[1]; // Type as string
+          onShowLoader(true);
           // Use axios.post with generic types
           await axios.post<InferenceResponse>(
             `${process.env.NEXT_PUBLIC_BACKEND_URL}/inference`,
             { image: imageData }
           ).then((response) => {
             onImageInferenced(response.data);
+            onShowLoader(false);
           });
         }
       };
       reader.readAsDataURL(selectedImage);
     }
   };
+
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
@@ -36,7 +44,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onImageSelected, onImageInfer
     const reader = new FileReader();
     reader.onloadend = () => {
       setSelectedImage(file);
-      onImageInferenced({results: []})
+      onImageInferenced({results: []});
       onImageSelected(reader.result as string);
     };
     reader.readAsDataURL(file);

@@ -1,12 +1,15 @@
-import React, { useRef, useEffect } from 'react';
-import { InferenceResponse } from "../interfaces/InferenceInterface"
+import React, { useRef, useEffect } from "react";
+import { InferenceResponse } from "../interfaces/InferenceInterface";
+import { CircularProgress } from "@mui/material"
 
 interface ImagePreviewProps {
   imageUrl: string | null;
   boundingBoxes: InferenceResponse | null;
+  showLoader: boolean;
+  labelConf: number;
 }
 
-const ImagePreview: React.FC<ImagePreviewProps> = ({ imageUrl, boundingBoxes }) => {
+const ImagePreview: React.FC<ImagePreviewProps> = ({ imageUrl, boundingBoxes, showLoader, labelConf }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const font = "16pt Arial";
 
@@ -27,6 +30,7 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({ imageUrl, boundingBoxes }) 
         // Draw bounding boxes if they exist
         if (boundingBoxes && boundingBoxes.results.length > 0) {
           boundingBoxes.results.forEach((boundingBox) => {
+            if (boundingBox.confidence < labelConf) return;
             context.strokeStyle = "red";
             context.lineWidth = 2;
             const {x1, y1, x2, y2} = boundingBox.box;
@@ -47,10 +51,11 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({ imageUrl, boundingBoxes }) 
       image.src = imageUrl;
     }
 
-  }, [imageUrl, boundingBoxes])
+  }, [imageUrl, boundingBoxes, labelConf])
 
   return (
-    <div>
+    <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+      {showLoader && <CircularProgress style={{ position: "absolute" }} />}
       <canvas ref={canvasRef} />
     </div>
   );
