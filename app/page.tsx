@@ -5,7 +5,7 @@ import ImageUpload from "@/components/ImageUpload";
 import ImagePreview from "@/components/ImagePreview";
 import PreviewSettings from "@/components/PreviewSettings";
 import { useState } from "react";
-import { InferenceResponse } from "../interfaces/InferenceInterface";
+import { InferenceResponse } from "@/interfaces/InferenceInterface";
 
 export default function Home() {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
