@@ -6,7 +6,7 @@ import ChatView from "@/components/ChatView";
 import { ChatLog } from "@/interfaces/ChatInterface";
 import { useState, useEffect } from "react";
 
-const StyledContainer = styled.div(props => ({
+const StyledContainer = styled.div({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
@@ -14,7 +14,7 @@ const StyledContainer = styled.div(props => ({
   width: "100%",
   height: "100vh",
   padding: "1rem"
-}));
+});
 
 export default function Chat() {
   const [chatLogs, setChatLogs] = useState<ChatLog[]>([]);
@@ -25,6 +25,7 @@ export default function Chat() {
   }
 
   const onChatSend = (newChatLog: ChatLog) => {
+    if (ws?.readyState != ws?.OPEN) connectWebSocket();
     handleChatLogUpdate(newChatLog);
     ws?.send(newChatLog.content);
   }
@@ -32,14 +33,11 @@ export default function Chat() {
   const connectWebSocket = () => {
     //開啟
     const socket = new WebSocket(`${process.env.NEXT_PUBLIC_SOCKET_PATH}/chat`);
-    socket.onopen = (event) => {
+    socket.onopen = () => {
       console.log("socket connection established");
     }
     socket.onmessage = (event) => {
       handleChatLogUpdate({from: "Bot", content: event.data});
-    }
-    socket.onerror = (event) => {
-      connectWebSocket();
     }
     setWs(socket);
   };

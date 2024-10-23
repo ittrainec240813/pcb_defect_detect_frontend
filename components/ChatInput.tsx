@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 import { ChatLog } from "@/interfaces/ChatInterface";
 import { useState } from "react";
 
-const InputContainer = styled.div(props => ({
+const InputContainer = styled.div({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -13,7 +13,7 @@ const InputContainer = styled.div(props => ({
   borderRadius: "5px",
   padding: "0.5rem",
   width: "80%"
-}))
+})
 
 interface ChatInputProps {
   onSendMessage: (newChatLog: ChatLog) => void
@@ -34,7 +34,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage }) => {
         variant="filled"
         placeholder="Say something"
         hiddenLabel
-        sx={{width: "100%", color: "white"}}
+        sx={{width: "100%"}}
         value={prompt}
         onChange={(event) => setPrompt(event.target.value)}
       />
