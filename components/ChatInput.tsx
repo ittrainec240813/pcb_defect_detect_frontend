@@ -12,7 +12,8 @@ const InputContainer = styled.div({
   color: "white",
   borderRadius: "5px",
   padding: "0.5rem",
-  width: "80%"
+  width: "80%",
+  backgroundColor: "#212121"
 })
 
 interface ChatInputProps {
@@ -37,6 +38,9 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage }) => {
         sx={{width: "100%"}}
         value={prompt}
         onChange={(event) => setPrompt(event.target.value)}
+        slotProps={{
+          input: {style: {color: "#FFFFFF"}}
+        }}
       />
       <Button onClick={handleClick}>
         <SendIcon />

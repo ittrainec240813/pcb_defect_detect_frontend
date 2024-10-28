@@ -12,7 +12,7 @@ const StyledContainer = styled.div({
   alignItems: "center",
   justifyContent: "end",
   width: "100%",
-  height: "100vh",
+  height: "90vh",
   padding: "1rem"
 });
 
