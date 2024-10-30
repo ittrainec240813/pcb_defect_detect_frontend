@@ -26,7 +26,7 @@ const AppHeader:React.FC<AppHeaderProps>  = ({ onSetDrawer }) => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            News
+            人工智能知識管理系統
           </Typography>
         </Toolbar>
       </AppBar>
