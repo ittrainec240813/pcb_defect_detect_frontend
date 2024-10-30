@@ -41,7 +41,7 @@ const MainDrawer:React.FC<MainDrawerProps> = ({ open, onSetDrawer }) => {
     {
       title: "Chat",
       icon: <ChatIcon sx={{color: "white", mr: "1px"}} />,
-      route: "/chat"
+      route: "/rag"
     }
   ]
 
@@ -57,10 +57,8 @@ const MainDrawer:React.FC<MainDrawerProps> = ({ open, onSetDrawer }) => {
         width: "20%",
         flexShrink: 0,
         '& .MuiDrawer-paper': {
-          width: "20%",
-        
+          width: "20%",        
           bgcolor: "#1d1d1d"
-          // boxSizing: 'border-box',
         },
       }}
       variant="persistent"

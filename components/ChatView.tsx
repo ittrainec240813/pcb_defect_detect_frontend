@@ -9,6 +9,7 @@ import {
 import React from "react";
 import { Person, SmartToy } from "@mui/icons-material";
 import { ChatLog } from "@/interfaces/ChatInterface";
+import Markdown from "react-markdown";
 
 interface ChatViewProps {
   ChatLogs: ChatLog[];
@@ -42,7 +43,9 @@ const ChatView: React.FC<ChatViewProps> = ({ ChatLogs }) => {
           />
           <CardContent>
             <Typography>
-              {chatLog.content}
+              <Markdown>
+                {chatLog.content}
+              </Markdown>
             </Typography>
           </CardContent>
         </Card>
