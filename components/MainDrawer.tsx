@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import HomeIcon from '@mui/icons-material/Home';
 import ChatIcon from '@mui/icons-material/Chat';
+import InfoIcon from '@mui/icons-material/Info';
 
 interface MainDrawerProps extends DrawerProps {
   open: boolean;
@@ -42,6 +43,11 @@ const MainDrawer:React.FC<MainDrawerProps> = ({ open, onSetDrawer }) => {
       title: "Chat",
       icon: <ChatIcon sx={{color: "white", mr: "1px"}} />,
       route: "/rag"
+    },
+    {
+      title: "About",
+      icon: <InfoIcon sx={{color: "white", mr: "1px"}} />,
+      route: "/about"
     }
   ]
 

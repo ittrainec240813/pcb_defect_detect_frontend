@@ -1,0 +1,23 @@
+{
+  "titles": {
+    "email": "Email",
+    "github": "GitHub"
+  },
+  "contents": [
+    {
+      "name": "Luke",
+      "email": "lukechu3501@gmail.com",
+      "github": "https://github.com/lukechu1997"
+    },
+    {
+      "name": "林凡又",
+      "email": "diane93.lin@gmail.com",
+      "github": "https://github.com/Diane-mg11"
+    },
+    {
+      "name": "黃文成",
+      "email": "284qu4qu4284@gmail.com",
+      "github": "https://github.com/Woonchen"
+    }
+  ]
+}
